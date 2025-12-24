@@ -1,4 +1,28 @@
 // server.js
+const express = require("express");
+const mysql = require("mysql2");
+const cors = require("cors");
+
+const app = express();
+app.use(cors()); // Mengizinkan akses dari Vite (frontend)
+app.use(express.json());
+
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "belajar_vite",
+});
+
+app.get("/api/data", (req, res) => {
+  db.query("SELECT * FROM users", (err, result) => {
+    if (err) res.status(500).send(err);
+    else res.json(result);
+  });
+});
+
+app.listen(5000, () => console.log("Server running on port 5000"));
+
 const { createServer } = require("http");
 const { parse } = require("url");
 const next = require("next");

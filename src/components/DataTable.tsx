@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -6,18 +6,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Search, Plus, Download, Upload, Pencil, Trash2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/select";
+import { Search, Plus, Download, Upload, Pencil, Trash2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export interface Column<T> {
   key: keyof T | string;
@@ -51,8 +51,8 @@ function DataTable<T extends { id: string }>({
   title,
   freonFilter = false,
 }: DataTableProps<T>) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [freonType, setFreonType] = useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [freonType, setFreonType] = useState<string>("all");
 
   const filteredData = useMemo(() => {
     return data.filter((item) => {
@@ -61,10 +61,11 @@ function DataTable<T extends { id: string }>({
         return String(value).toLowerCase().includes(searchTerm.toLowerCase());
       });
 
-      const matchesFreon = freonType === 'all' || 
+      const matchesFreon =
+        freonType === "all" ||
         (item as Record<string, unknown>).freon === freonType;
 
-      return (searchTerm === '' || matchesSearch) && matchesFreon;
+      return (searchTerm === "" || matchesSearch) && matchesFreon;
     });
   }, [data, searchTerm, searchKeys, freonType]);
 
@@ -130,7 +131,9 @@ function DataTable<T extends { id: string }>({
                   </TableHead>
                 ))}
                 {(onEdit || onDelete) && (
-                  <TableHead className="text-right font-semibold">Aksi</TableHead>
+                  <TableHead className="text-right font-semibold">
+                    Aksi
+                  </TableHead>
                 )}
               </TableRow>
             </TableHeader>
@@ -149,15 +152,19 @@ function DataTable<T extends { id: string }>({
                   <TableRow
                     key={item.id}
                     className={cn(
-                      'transition-colors hover:bg-muted/30',
-                      index % 2 === 0 ? 'bg-background' : 'bg-muted/10'
+                      "transition-colors hover:bg-muted/30",
+                      index % 2 === 0 ? "bg-background" : "bg-muted/10"
                     )}
                   >
                     {columns.map((col) => (
                       <TableCell key={String(col.key)}>
                         {col.render
                           ? col.render(item)
-                          : String((item as Record<string, unknown>)[col.key as string] ?? '')}
+                          : String(
+                              (item as Record<string, unknown>)[
+                                col.key as string
+                              ] ?? ""
+                            )}
                       </TableCell>
                     ))}
                     {(onEdit || onDelete) && (
